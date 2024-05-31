@@ -5,7 +5,7 @@ public interface ITurmaRepository
 {
     Task<IEnumerable<Turma>> GetAllAsync();
     Task<Turma> GetByIdAsync(int id);
-    Task<Turma> GetByNameAsync(string name);
+    Task<Turma> GetByNomeAsync(string name);
     Task<Turma> AddAsync(Turma Turma);
     Task<Turma> UpdateAsync(Turma Turma);
     Task DeleteAsync(int id);

@@ -1,12 +1,11 @@
-﻿using Fiap.TesteTecnico.ClassManager.Domain.Dto.Turma;
-using Fiap.TesteTecnico.ClassManager.Domain.Entities;
+﻿using Fiap.TesteTecnico.ClassManager.Domain.Dto;
 
 namespace Fiap.TesteTecnico.ClassManager.Domain.Interfaces.Services;
 public interface ITurmaService
 {
-    Task<IEnumerable<Turma>> GetAllAsync();
-    Task<Turma> GetByIdAsync(Guid id);
-    Task<Turma> AddAsync(CreateOrUpdateTurmaDto turma);
-    Task<Turma> UpdateAsync(CreateOrUpdateTurmaDto turma);
+    Task<IEnumerable<TurmaDto>> GetAllAsync();
+    Task<TurmaDto> GetByIdAsync(int id);
+    Task<TurmaDto> AddAsync(CreateTurmaDto turmaDto);
+    Task<TurmaDto> UpdateAsync(UpdateTurmaDto turmaDto);
     Task DeleteAsync(int id);
 }
