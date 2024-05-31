@@ -31,5 +31,8 @@ public class AlunosController(IAlunoService service) : ControllerBase
 
     [HttpPost]
     public async Task<ActionResult<AlunoDto>> AddAluno([FromBody] CreateAlunoDto alunoDto)
-        => CreatedAtAction("teste", await _service.AddAsync(alunoDto));
+    {
+        var addedAluno = await _service.AddAsync(alunoDto);
+        return CreatedAtAction(nameof(GetAlunos), new { id = addedAluno.Id }, addedAluno);
+    }
 }
