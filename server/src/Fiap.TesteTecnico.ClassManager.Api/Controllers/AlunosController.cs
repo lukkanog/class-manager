@@ -10,7 +10,26 @@ public class AlunosController(IAlunoService service) : ControllerBase
 {
     private readonly IAlunoService _service = service;
 
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<AlunoDto>>> GetAlunos()
+        => Ok(await _service.GetAllAsync());
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<AlunoDto>> GetAlunos(int id)
+        => Ok(await _service.GetByIdAsync(id));
+
+    [HttpPut]
+    public async Task<ActionResult<AlunoDto>> UpdateAluno([FromBody] UpdateAlunoDto alunoDto)
+        => Ok(await _service.UpdateAsync(alunoDto));
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeleteAluno(int id)
+    {
+        await _service.DeleteAsync(id);
+        return NoContent();
+    }
+
     [HttpPost]
-    public async Task<ActionResult<AlunoDto>> AddAluno([FromBody] CreateOrUpdateAlunoDto alunoDto)
-        => Ok(await _service.AddAsync(alunoDto));
+    public async Task<ActionResult<AlunoDto>> AddAluno([FromBody] CreateAlunoDto alunoDto)
+        => CreatedAtAction("teste", await _service.AddAsync(alunoDto));
 }

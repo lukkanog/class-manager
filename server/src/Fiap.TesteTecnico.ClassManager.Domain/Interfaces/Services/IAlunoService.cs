@@ -4,8 +4,8 @@ namespace Fiap.TesteTecnico.ClassManager.Domain.Interfaces.Services;
 public interface IAlunoService
 {
     Task<IEnumerable<AlunoDto>> GetAllAsync();
-    Task<AlunoDto> GetByIdAsync(Guid id);
-    Task<AlunoDto> AddAsync(CreateOrUpdateAlunoDto alunoDto);
-    Task<AlunoDto> UpdateAsync(CreateOrUpdateAlunoDto alunoDto);
+    Task<AlunoDto> GetByIdAsync(int id);
+    Task<AlunoDto> AddAsync(CreateAlunoDto alunoDto);
+    Task<AlunoDto> UpdateAsync(UpdateAlunoDto alunoDto);
     Task DeleteAsync(int id);
 }
