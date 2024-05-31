@@ -3,7 +3,7 @@ BEGIN
     CREATE TABLE aluno (
         id INT IDENTITY PRIMARY KEY,
         nome VARCHAR(255),
-        usuario VARCHAR(45),
+        usuario VARCHAR(45) UNIQUE,
         senha CHAR(60)
     );
 END
@@ -14,7 +14,7 @@ BEGIN
     CREATE TABLE turma (
         id INT IDENTITY PRIMARY KEY,
         curso_id INT,
-        turma VARCHAR(45),
+        turma VARCHAR(45) UNIQUE,
         ano INT
     );
 END
