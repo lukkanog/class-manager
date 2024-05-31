@@ -1,3 +1,4 @@
+using Fiap.TesteTecnico.ClassManager.Api.Middlewares;
 using Fiap.TesteTecnico.ClassManager.Infra;
 using Fiap.TesteTecnico.ClassManager.Service;
 using Serilog;
@@ -13,6 +14,9 @@ builder.Services.AddConnectionFactory();
 builder.Services.AddRepositories();
 builder.Services.AddApplicationServices();
 
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -22,6 +26,8 @@ builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
 
 var app = builder.Build();
+
+app.UseExceptionHandler();
 
 app.UseSerilogRequestLogging();
 
