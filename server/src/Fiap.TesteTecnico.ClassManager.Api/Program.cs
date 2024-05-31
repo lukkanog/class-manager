@@ -1,4 +1,4 @@
-using Fiap.TesteTecnico.ClassManager.Api.Middlewares;
+using Fiap.TesteTecnico.ClassManager.Api.ExceptionHandler;
 using Fiap.TesteTecnico.ClassManager.Infra;
 using Fiap.TesteTecnico.ClassManager.Service;
 using Serilog;
