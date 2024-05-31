@@ -1,4 +1,4 @@
-﻿namespace Fiap.TesteTecnico.ClassManager.Domain.Dto.Turma;
+﻿namespace Fiap.TesteTecnico.ClassManager.Domain.Dto;
 public class CreateOrUpdateTurmaDto
 {
     public int CursoId { get; set; }

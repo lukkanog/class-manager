@@ -1,4 +1,5 @@
 using Fiap.TesteTecnico.ClassManager.Infra;
+using Fiap.TesteTecnico.ClassManager.Service;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,10 @@ Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.FromLogContext()
     .CreateLogger();
+
+builder.Services.AddConnectionFactory();
+builder.Services.AddRepositories();
+builder.Services.AddApplicationServices();
 
 builder.Services.AddControllers();
 

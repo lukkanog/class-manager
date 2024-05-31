@@ -1,4 +1,4 @@
-﻿namespace Fiap.TesteTecnico.ClassManager.Domain.Dto.AlunoTurma;
+﻿namespace Fiap.TesteTecnico.ClassManager.Domain.Dto;
 public class CreateAlunoTurmaDto
 {
     public int AlunoId { get; set; }

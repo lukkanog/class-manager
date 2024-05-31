@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Fiap.TesteTecnico.ClassManager.Infra\Fiap.TesteTecnico.ClassManager.Infra.csproj" />
+    <ProjectReference Include="..\Fiap.TesteTecnico.ClassManager.Service\Fiap.TesteTecnico.ClassManager.Service.csproj" />
   </ItemGroup>
 
 </Project>
