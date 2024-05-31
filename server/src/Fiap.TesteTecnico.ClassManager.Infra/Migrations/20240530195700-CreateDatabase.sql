@@ -24,7 +24,9 @@ IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'aluno_turma')
 BEGIN
     CREATE TABLE aluno_turma (
         aluno_id INT FOREIGN KEY REFERENCES aluno(id),
-        turma_id INT FOREIGN KEY REFERENCES turma(id)
+        turma_id INT FOREIGN KEY REFERENCES turma(id),
+
+        PRIMARY KEY (aluno_id, turma_id)
     );
 END
 GO
