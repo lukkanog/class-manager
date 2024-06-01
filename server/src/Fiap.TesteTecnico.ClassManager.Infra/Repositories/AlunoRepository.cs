@@ -12,7 +12,7 @@ public class AlunoRepository(IDbConnectionFactory dbConnectionFactory) : IAlunoR
     {
         const string sql = @"
             SELECT 
-                a.Id, a.Nome, a.Usuario, a.Senha,
+                a.Id, a.Nome, a.Usuario,
                 t.id, t.curso_id AS CursoId, t.turma AS Nome, t.Ano
             FROM aluno a
             LEFT JOIN aluno_turma at ON at.aluno_id = a.id
@@ -52,7 +52,7 @@ public class AlunoRepository(IDbConnectionFactory dbConnectionFactory) : IAlunoR
     {
         const string sql = @"
             SELECT 
-                a.Id, a.Nome, a.Usuario, a.Senha,
+                a.Id, a.Nome, a.Usuario,
                 t.id, t.curso_id AS CursoId, t.turma AS Nome, t.Ano
             FROM aluno a
             LEFT JOIN aluno_turma at ON at.aluno_id = a.id
@@ -92,7 +92,7 @@ public class AlunoRepository(IDbConnectionFactory dbConnectionFactory) : IAlunoR
 
     public async Task<Aluno> GetByUsuarioAsync(string usuario)
     {
-        const string sql = @"SELECT Nome, Usuario, Senha FROM aluno WHERE Usuario = @Usuario";
+        const string sql = @"SELECT Id, Nome, Usuario  FROM aluno WHERE Usuario = @Usuario";
 
         using var connection = _connectionFactory.Create();
         connection.Open();
