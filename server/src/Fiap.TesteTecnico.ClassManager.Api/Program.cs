@@ -15,7 +15,6 @@ builder.Services.AddConnectionFactory();
 builder.Services.AddRepositories();
 builder.Services.AddMediatR();
 builder.Services.AddValidators();
-builder.Services.AddApplicationServices();
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
