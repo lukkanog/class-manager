@@ -5,5 +5,4 @@ public interface IAlunoService
 {
     Task<IEnumerable<AlunoDto>> GetAllAsync();
     Task<AlunoDto> GetByIdAsync(int id);
-    Task DeleteAsync(int id);
 }

@@ -34,14 +34,4 @@ public class AlunoService(IAlunoRepository alunoRepository) : IAlunoService
             aluno.Turmas.Select(t => new TurmaDto(t.Id, t.CursoId, t.Nome, t.Ano))
         );
     }
-
-    public async Task DeleteAsync(int id)
-    {
-        var alunoExistente = await _alunoRepository.GetByIdAsync(id);
-
-         if (alunoExistente is null)
-            throw new NotFoundException($"Aluno de id {id} não foi encontrado.");
-
-        await _alunoRepository.DeleteAsync(id);
-    }
 }
