@@ -1,3 +1,4 @@
+using Fiap.TesteTecnico.ClassManager.Api.Configurations;
 using Fiap.TesteTecnico.ClassManager.Api.ExceptionHandler;
 using Fiap.TesteTecnico.ClassManager.Infra;
 using Fiap.TesteTecnico.ClassManager.Service;
@@ -26,7 +27,7 @@ builder.Services.AddControllers()
     });
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwagger();
 
 builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
