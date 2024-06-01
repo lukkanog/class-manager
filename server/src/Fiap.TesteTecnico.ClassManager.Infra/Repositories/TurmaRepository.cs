@@ -21,8 +21,8 @@ namespace Fiap.TesteTecnico.ClassManager.Infra.Repositories
                     t.Id, t.curso_id AS CursoId, t.turma AS Nome, t.Ano,
                     a.Id, a.Nome, a.Usuario
                 FROM turma t
-                INNER JOIN aluno_turma at ON at.turma_id = t.id
-                INNER JOIN aluno a ON a.id = at.aluno_id
+                LEFT JOIN aluno_turma at ON at.turma_id = t.id
+                LEFT JOIN aluno a ON a.id = at.aluno_id
             ";
 
             using var connection = _connectionFactory.Create();
@@ -41,7 +41,10 @@ namespace Fiap.TesteTecnico.ClassManager.Infra.Repositories
                         turmaDictionary.Add(currentTurma.Id, currentTurma);
                     }
 
-                    currentTurma.Alunos.Add(aluno);
+                    if (aluno is not null && aluno.Id != 0)
+                    {
+                        currentTurma.Alunos.Add(aluno);
+                    }
 
                     return currentTurma;
                 },
@@ -58,8 +61,8 @@ namespace Fiap.TesteTecnico.ClassManager.Infra.Repositories
                     t.Id, t.curso_id AS CursoId, t.turma AS Nome, t.Ano,
                     a.Id, a.Nome, a.Usuario
                 FROM turma t
-                INNER JOIN aluno_turma at ON at.turma_id = t.id
-                INNER JOIN aluno a ON a.id = at.aluno_id
+                LEFT JOIN aluno_turma at ON at.turma_id = t.id
+                LEFT JOIN aluno a ON a.id = at.aluno_id
                 WHERE t.id = @Id
             ";
 
@@ -79,7 +82,10 @@ namespace Fiap.TesteTecnico.ClassManager.Infra.Repositories
                         turmaDictionary.Add(currentTurma.Id, currentTurma);
                     }
 
-                    currentTurma.Alunos.Add(aluno);
+                    if (aluno is not null && aluno.Id != 0)
+                    {
+                        currentTurma.Alunos.Add(aluno);
+                    }
 
                     return currentTurma;
                 },
@@ -92,7 +98,7 @@ namespace Fiap.TesteTecnico.ClassManager.Infra.Repositories
 
         public async Task<Turma> GetByNomeAsync(string nome)
         {
-            const string sql = @"SELECT Id, curso_id AS CursoId, turma AS Nome, Ano FROM turma WHERE Nome = @Nome";
+            const string sql = @"SELECT Id, curso_id AS CursoId, turma AS Nome, Ano FROM turma WHERE turma = @Nome";
 
             using var connection = _connectionFactory.Create();
             connection.Open();
