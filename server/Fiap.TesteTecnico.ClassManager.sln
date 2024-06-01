@@ -5,11 +5,17 @@ VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fiap.TesteTecnico.ClassManager.Api", "src\Fiap.TesteTecnico.ClassManager.Api\Fiap.TesteTecnico.ClassManager.Api.csproj", "{9FEF0506-B40F-42A2-80C4-98B79EA41FBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiap.TesteTecnico.ClassManager.Domain", "src\Fiap.TesteTecnico.ClassManager.Domain\Fiap.TesteTecnico.ClassManager.Domain.csproj", "{0B6F7D2E-BF47-4DF2-83A8-6F78E255A83E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fiap.TesteTecnico.ClassManager.Domain", "src\Fiap.TesteTecnico.ClassManager.Domain\Fiap.TesteTecnico.ClassManager.Domain.csproj", "{0B6F7D2E-BF47-4DF2-83A8-6F78E255A83E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiap.TesteTecnico.ClassManager.Infra", "src\Fiap.TesteTecnico.ClassManager.Infra\Fiap.TesteTecnico.ClassManager.Infra.csproj", "{38BD4FFF-1473-410C-B284-990AD9E8B2BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fiap.TesteTecnico.ClassManager.Infra", "src\Fiap.TesteTecnico.ClassManager.Infra\Fiap.TesteTecnico.ClassManager.Infra.csproj", "{38BD4FFF-1473-410C-B284-990AD9E8B2BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiap.TesteTecnico.ClassManager.Service", "src\Fiap.TesteTecnico.ClassManager.Service\Fiap.TesteTecnico.ClassManager.Service.csproj", "{251F4BE2-4197-4A31-8B21-627F08F23B78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fiap.TesteTecnico.ClassManager.Service", "src\Fiap.TesteTecnico.ClassManager.Service\Fiap.TesteTecnico.ClassManager.Service.csproj", "{251F4BE2-4197-4A31-8B21-627F08F23B78}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CD74BD5C-1FB2-46EB-BCB7-9CF2C1198A40}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{ED94EC1A-35AC-4618-93FA-17DE8FDCBE30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiap.TesteTecnico.ClassManager.Service.Tests", "tests\Fiap.TesteTecnico.ClassManager.Service.Tests\Fiap.TesteTecnico.ClassManager.Service.Tests.csproj", "{59FA44A5-C9B1-4B31-A838-667DC38112C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,9 +39,20 @@ Global
 		{251F4BE2-4197-4A31-8B21-627F08F23B78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{251F4BE2-4197-4A31-8B21-627F08F23B78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{251F4BE2-4197-4A31-8B21-627F08F23B78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59FA44A5-C9B1-4B31-A838-667DC38112C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59FA44A5-C9B1-4B31-A838-667DC38112C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59FA44A5-C9B1-4B31-A838-667DC38112C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59FA44A5-C9B1-4B31-A838-667DC38112C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9FEF0506-B40F-42A2-80C4-98B79EA41FBF} = {CD74BD5C-1FB2-46EB-BCB7-9CF2C1198A40}
+		{0B6F7D2E-BF47-4DF2-83A8-6F78E255A83E} = {CD74BD5C-1FB2-46EB-BCB7-9CF2C1198A40}
+		{38BD4FFF-1473-410C-B284-990AD9E8B2BA} = {CD74BD5C-1FB2-46EB-BCB7-9CF2C1198A40}
+		{251F4BE2-4197-4A31-8B21-627F08F23B78} = {CD74BD5C-1FB2-46EB-BCB7-9CF2C1198A40}
+		{59FA44A5-C9B1-4B31-A838-667DC38112C7} = {ED94EC1A-35AC-4618-93FA-17DE8FDCBE30}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8E2F6F1B-1FB6-473D-BABD-708653B023CB}
