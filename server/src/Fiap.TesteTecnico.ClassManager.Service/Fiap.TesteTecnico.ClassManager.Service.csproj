@@ -18,4 +18,8 @@
     <ProjectReference Include="..\Fiap.TesteTecnico.ClassManager.Domain\Fiap.TesteTecnico.ClassManager.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands\Aluno\" />
+  </ItemGroup>
+
 </Project>

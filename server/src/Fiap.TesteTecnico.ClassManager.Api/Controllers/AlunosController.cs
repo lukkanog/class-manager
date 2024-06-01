@@ -1,7 +1,8 @@
 ﻿using Fiap.TesteTecnico.ClassManager.Domain.Dto;
 using Fiap.TesteTecnico.ClassManager.Domain.Interfaces.Services;
-using Fiap.TesteTecnico.ClassManager.Service.Commands.Aluno.CreateAluno;
-using Fiap.TesteTecnico.ClassManager.Service.Commands.Aluno.UpdateAluno;
+using Fiap.TesteTecnico.ClassManager.Service.Commands.DeleteAluno;
+using Fiap.TesteTecnico.ClassManager.Service.Commands.CreateAluno;
+using Fiap.TesteTecnico.ClassManager.Service.Commands.UpdateAluno;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,7 +30,7 @@ public class AlunosController(IAlunoService service, ISender sender) : Controlle
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteAluno(int id)
     {
-        await _service.DeleteAsync(id);
+        await _sender.Send(new DeleteAlunoCommand(id));
         return NoContent();
     }
 
