@@ -18,7 +18,7 @@ public class AlunoTurmaController(IAlunoTurmaService alunoTurmaService) : Contro
     public async Task<ActionResult<AlunoTurmaDto>> AddAlunoTurma([FromBody] CreateAlunoTurmaDto alunoTurma)
         => Ok(await _service.AddAsync(alunoTurma));
 
-    [HttpDelete("/aluno/{alunoId}/turma/{turmaId}")]
+    [HttpDelete("aluno/{alunoId}/turma/{turmaId}")]
     public async Task<ActionResult> DeleteAlunoTurma(int alunoId, int turmaId)
     {
         await _service.DeleteAsync(alunoId, turmaId);
