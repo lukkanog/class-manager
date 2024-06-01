@@ -9,9 +9,9 @@ public class DeleteTurmaHandler(ITurmaRepository turmaRepository) : IRequestHand
 
     public async Task Handle(DeleteTurmaCommand request, CancellationToken cancellationToken)
     {
-        var turmaExistente = await _turmaRepository.GetByIdAsync(request.Id);
+        var existingTurma = await _turmaRepository.GetByIdAsync(request.Id);
 
-        if (turmaExistente is null)
+        if (existingTurma is null)
             throw new NotFoundException($"Turma de id {request.Id} não foi encontrada.");
 
         await _turmaRepository.DeleteAsync(request.Id);

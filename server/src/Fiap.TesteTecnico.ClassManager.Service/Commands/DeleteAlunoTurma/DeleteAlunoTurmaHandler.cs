@@ -10,8 +10,8 @@ public class DeleteAlunoTurmaHandler(IAlunoTurmaRepository alunoTurmaRepository)
 
     public async Task Handle(DeleteAlunoTurmaCommand request, CancellationToken cancellationToken)
     {
-        var alunoTurmaExistente = await _alunoTurmaRepository.GetByAlunoIdAndTurmaIdAsync(request.AlunoId, request.TurmaId);
-        if (alunoTurmaExistente is null)
+        var alunoexistingTurma = await _alunoTurmaRepository.GetByAlunoIdAndTurmaIdAsync(request.AlunoId, request.TurmaId);
+        if (alunoexistingTurma is null)
             throw new NotFoundException($"Não foi encontrada uma relação de aluno de id {request.AlunoId} com a turma {request.TurmaId}");
 
         await _alunoTurmaRepository.DeleteAsync(request.AlunoId, request.TurmaId);

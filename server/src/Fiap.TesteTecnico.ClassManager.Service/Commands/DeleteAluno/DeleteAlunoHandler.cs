@@ -10,9 +10,9 @@ public class DeleteAlunoHandler(IAlunoRepository alunoRepository) : IRequestHand
 
     public async Task Handle(DeleteAlunoCommand request, CancellationToken cancellationToken)
     {
-        var alunoExistente = await _alunoRepository.GetByIdAsync(request.Id);
+        var existingAluno = await _alunoRepository.GetByIdAsync(request.Id);
 
-        if (alunoExistente is null)
+        if (existingAluno is null)
             throw new NotFoundException($"Aluno de id {request.Id} não foi encontrado.");
 
         await _alunoRepository.DeleteAsync(request.Id);

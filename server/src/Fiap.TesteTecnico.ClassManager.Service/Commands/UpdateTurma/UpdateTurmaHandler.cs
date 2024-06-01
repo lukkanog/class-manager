@@ -19,9 +19,9 @@ public class UpdateTurmaHandler(ITurmaRepository turmaRepository, IValidator<Upd
 
         result.ThrowExceptionIfNotValid("Erro ao criar turma");
 
-        var turmaExistente = await _turmaRepository.GetByIdAsync(request.Id);
+        var existingTurma = await _turmaRepository.GetByIdAsync(request.Id);
 
-        if (turmaExistente is null)
+        if (existingTurma is null)
             throw new NotFoundException($"Turma de id {request.Id} não foi encontrada.");
 
         var updatedTurma = await _turmaRepository.UpdateAsync(request);

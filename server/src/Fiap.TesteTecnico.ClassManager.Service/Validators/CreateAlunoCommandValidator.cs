@@ -25,8 +25,8 @@ public class CreateAlunoCommandValidator : AbstractValidator<CreateAlunoCommand>
             .WithMessage("Aluno deve ter no máximo 45 caracteres.")
             .MustAsync(async (usuario, cancellationToken) =>
             {
-                var usuarioExistente = await _alunoRepository.GetByUsuarioAsync(usuario);
-                return usuarioExistente is null;
+                var existingUsuario = await _alunoRepository.GetByUsuarioAsync(usuario);
+                return existingUsuario is null;
             })
             .WithMessage("Aluno já existe.");
 

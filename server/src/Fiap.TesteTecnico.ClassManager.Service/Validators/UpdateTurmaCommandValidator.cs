@@ -22,8 +22,8 @@ public class UpdateTurmaCommandValidator : AbstractValidator<UpdateTurmaCommand>
         RuleFor(x => new { x.Nome, x.Id })
             .MustAsync(async (model, _, cancellationToken) =>
             {
-                var usuarioExistente = await _turmaRepository.GetByNomeAsync(model.Nome);
-                return usuarioExistente is null || usuarioExistente.Id == model.Id;
+                var existingNome = await _turmaRepository.GetByNomeAsync(model.Nome);
+                return existingNome is null || existingNome.Id == model.Id;
             })
             .WithMessage("Aluno já existe.");
 

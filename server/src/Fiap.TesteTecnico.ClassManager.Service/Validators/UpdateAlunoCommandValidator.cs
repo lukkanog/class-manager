@@ -27,8 +27,8 @@ public class UpdateAlunoCommandValidator : AbstractValidator<UpdateAlunoCommand>
         RuleFor(x => new { x.Usuario, x.Id })
             .MustAsync(async (model, _, cancellationToken) =>
             {
-                var usuarioExistente = await _alunoRepository.GetByUsuarioAsync(model.Usuario);
-                return usuarioExistente is null || usuarioExistente.Id == model.Id;
+                var existingUsuario = await _alunoRepository.GetByUsuarioAsync(model.Usuario);
+                return existingUsuario is null || existingUsuario.Id == model.Id;
             })
             .WithMessage("Aluno já existe.");
 

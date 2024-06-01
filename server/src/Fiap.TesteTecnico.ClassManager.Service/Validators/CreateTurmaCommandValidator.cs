@@ -20,8 +20,8 @@ public class CreateTurmaCommandValidator : AbstractValidator<CreateTurmaCommand>
             .WithMessage("Nome da turma deve ter no máximo 45 caracteres.")
             .MustAsync(async (nome, cancellationToken) =>
             {
-                var turmaExistente = await _turmaRepository.GetByNomeAsync(nome);
-                return turmaExistente is null;
+                var existingTurma = await _turmaRepository.GetByNomeAsync(nome);
+                return existingTurma is null;
             })
             .WithMessage("Turma já existe.");
 
