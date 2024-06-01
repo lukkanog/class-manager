@@ -47,9 +47,9 @@ namespace Fiap.TesteTecnico.ClassManager.Infra.Repositories
         public async Task<Turma> AddAsync(Turma turma)
         {
             const string sql = @"
-                INSERT INTO turma (CursoId, turma AS Nome, Ano) 
-                OUTPUT INSERTED.Id, INSERTED.curso_id AS CursoId, INSERTED.turma AS turma AS Nome, INSERTED.Ano
-                VALUES (@CursoId, @turma AS Nome, @Ano)
+                INSERT INTO turma (curso_id, turma, ano) 
+                OUTPUT INSERTED.Id, INSERTED.curso_id AS CursoId, INSERTED.turma AS Nome, INSERTED.Ano
+                VALUES (@CursoId, @Nome, @Ano)
             ";
 
             using var connection = _connectionFactory.Create();
@@ -64,8 +64,8 @@ namespace Fiap.TesteTecnico.ClassManager.Infra.Repositories
         {
             const string sql = @"
                 UPDATE turma
-                SET CursoId = @CursoId, Nome = @turma AS Nome, Ano = @Ano
-                OUTPUT INSERTED.Id, INSERTED.CursoId, INSERTED.turma AS Nome, INSERTED.Ano
+                SET curso_d = @CursoId, turma = @Nome, ano = @Ano
+                OUTPUT INSERTED.Id, INSERTED.curso_id AS CursoId, INSERTED.turma AS Nome, INSERTED.Ano
                 WHERE id = @Id
             ";
 
