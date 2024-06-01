@@ -3,7 +3,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 
-namespace Fiap.TesteTecnico.ClassManager.Infra;
+namespace Fiap.TesteTecnico.ClassManager.Infra.Factories;
 public class SqlServerConnectionFactory(IConfiguration configuration) : IDbConnectionFactory
 {
     private readonly string _connectionString = configuration.GetConnectionString("ClassManager");

@@ -1,5 +1,6 @@
 ﻿using Fiap.TesteTecnico.ClassManager.Domain.Interfaces.Factories;
 using Fiap.TesteTecnico.ClassManager.Domain.Interfaces.Repositories;
+using Fiap.TesteTecnico.ClassManager.Infra.Factories;
 using Fiap.TesteTecnico.ClassManager.Infra.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
