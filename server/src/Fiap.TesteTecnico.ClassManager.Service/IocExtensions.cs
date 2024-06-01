@@ -9,7 +9,6 @@ public static class IocExtensions
 {
     public static void AddApplicationServices(this IServiceCollection services)
     {
-        services.AddScoped<IAlunoService, AlunoService>();
         services.AddScoped<ITurmaService, TurmaService>();
         services.AddScoped<IAlunoTurmaService, AlunoTurmaService>();
     }
