@@ -16,22 +16,78 @@ namespace Fiap.TesteTecnico.ClassManager.Infra.Repositories
 
         public async Task<IEnumerable<Turma>> GetAllAsync()
         {
-            const string sql = @"SELECT Id, curso_id AS CursoId, turma AS Nome, Ano FROM turma";
+            const string sql = @"
+                SELECT 
+                    t.Id, t.curso_id AS CursoId, t.turma AS Nome, t.Ano,
+                    a.Id, a.Nome, a.Usuario
+                FROM turma t
+                INNER JOIN aluno_turma at ON at.turma_id = t.id
+                INNER JOIN aluno a ON a.id = at.aluno_id
+            ";
 
             using var connection = _connectionFactory.Create();
             connection.Open();
 
-            return await connection.QueryAsync<Turma>(sql);
+            var turmaDictionary = new Dictionary<int, Turma>();
+
+            var result = await connection.QueryAsync<Turma, Aluno, Turma>(
+                sql,
+                (turma, aluno) =>
+                {
+                    if (!turmaDictionary.TryGetValue(turma.Id, out var currentTurma))
+                    {
+                        currentTurma = turma;
+                        currentTurma.Alunos = new List<Aluno>();
+                        turmaDictionary.Add(currentTurma.Id, currentTurma);
+                    }
+
+                    currentTurma.Alunos.Add(aluno);
+
+                    return currentTurma;
+                },
+                splitOn: "Id"
+            );
+
+            return result.Distinct();
         }
 
         public async Task<Turma> GetByIdAsync(int id)
         {
-            const string sql = @"SELECT Id, curso_id AS CursoId, turma AS Nome, Ano FROM turma WHERE id = @Id";
+            const string sql = @"
+                SELECT 
+                    t.Id, t.curso_id AS CursoId, t.turma AS Nome, t.Ano,
+                    a.Id, a.Nome, a.Usuario
+                FROM turma t
+                INNER JOIN aluno_turma at ON at.turma_id = t.id
+                INNER JOIN aluno a ON a.id = at.aluno_id
+                WHERE t.id = @Id
+            ";
 
             using var connection = _connectionFactory.Create();
             connection.Open();
 
-            return await connection.QueryFirstOrDefaultAsync<Turma>(sql, new { Id = id });
+            var turmaDictionary = new Dictionary<int, Turma>();
+
+            var result = await connection.QueryAsync<Turma, Aluno, Turma>(
+                sql,
+                (turma, aluno) =>
+                {
+                    if (!turmaDictionary.TryGetValue(turma.Id, out var currentTurma))
+                    {
+                        currentTurma = turma;
+                        currentTurma.Alunos = new List<Aluno>();
+                        turmaDictionary.Add(currentTurma.Id, currentTurma);
+                    }
+
+                    currentTurma.Alunos.Add(aluno);
+
+                    return currentTurma;
+                },
+                new { Id = id },
+                splitOn: "Id"
+            );
+
+            return result.FirstOrDefault();
         }
 
         public async Task<Turma> GetByNomeAsync(string nome)

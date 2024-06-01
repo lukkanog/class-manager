@@ -5,4 +5,6 @@ public class Turma
     public int CursoId { get; set; }
     public string Nome { get; set; } = string.Empty;
     public int Ano { get; set; }
+
+    public virtual List<Aluno> Alunos { get; set; }
 }

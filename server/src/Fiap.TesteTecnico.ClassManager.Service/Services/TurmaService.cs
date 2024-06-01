@@ -13,7 +13,14 @@ public class TurmaService(ITurmaRepository turmaRepository) : ITurmaService
     public async Task<IEnumerable<TurmaDto>> GetAllAsync()
     {
         var turmas = await _turmaRepository.GetAllAsync();
-        return turmas.Select(turma => new TurmaDto(turma.Id, turma.CursoId, turma.Nome, turma.Ano));
+
+        return turmas.Select(turma => new TurmaDto(
+            turma.Id,
+            turma.CursoId,
+            turma.Nome,
+            turma.Ano,
+            turma.Alunos.Select(a => new AlunoDto(a.Id, a.Nome, a.Usuario))
+        ));
     }
 
     public async Task<TurmaDto> GetByIdAsync(int id)
@@ -23,7 +30,13 @@ public class TurmaService(ITurmaRepository turmaRepository) : ITurmaService
         if (turma is null)
             throw new NotFoundException($"Turma de id {id} não foi encontrada.");
 
-        return new TurmaDto(turma.Id, turma.CursoId, turma.Nome, turma.Ano);
+        return new TurmaDto(
+            turma.Id,
+            turma.CursoId,
+            turma.Nome,
+            turma.Ano,
+            turma.Alunos.Select(a => new AlunoDto(a.Id, a.Nome, a.Usuario))
+        );
     }
 
     public async Task<TurmaDto> AddAsync(CreateTurmaDto turmaDto)
