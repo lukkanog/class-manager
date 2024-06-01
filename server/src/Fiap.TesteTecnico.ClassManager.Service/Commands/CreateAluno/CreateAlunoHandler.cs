@@ -21,9 +21,9 @@ public class CreateAlunoHandler(IAlunoRepository alunoRepository, IValidator<Cre
 
         request.Senha = CriptographyService.HashPassword(request.Senha);
 
-        var alunoCriado = await _alunoRepository.AddAsync(request);
+        var createdAluno = await _alunoRepository.AddAsync(request);
 
-        return new AlunoDto(alunoCriado.Id, alunoCriado.Nome, alunoCriado.Usuario);
+        return new AlunoDto(createdAluno.Id, createdAluno.Nome, createdAluno.Usuario);
     }
 
 
