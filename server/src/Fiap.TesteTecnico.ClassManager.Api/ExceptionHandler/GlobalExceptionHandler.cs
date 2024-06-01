@@ -43,7 +43,7 @@ namespace Fiap.TesteTecnico.ClassManager.Api.ExceptionHandler
                 problemDetails.Status = StatusCodes.Status404NotFound;
                 problemDetails.Title = HttpStatusCode.NotFound.ToString();
                 problemDetails.Type = GetRfcLinkForStatusCode(StatusCodes.Status404NotFound);
-                problemDetails.Detail = exception.Message;
+                problemDetails.Detail = notFoundException.Message;
             }
 
             if (exception is ValidationException validationException)
