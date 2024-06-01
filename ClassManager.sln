@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fiap.TesteTecnico.ClassMana
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fiap.TesteTecnico.ClassManager.Domain.Tests", "tests\Fiap.TesteTecnico.ClassManager.Domain.Tessts\Fiap.TesteTecnico.ClassManager.Domain.Tests.csproj", "{6AC765BF-B20F-4168-BDE8-58F242568630}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiap.TesteTecnico.ClassManager.Infra.Tests", "tests\Fiap.TesteTecnico.ClassManager.Infra.Tests\Fiap.TesteTecnico.ClassManager.Infra.Tests.csproj", "{1CB156F2-9220-491F-B66F-DC684E5154B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fiap.TesteTecnico.ClassManager.Infra.Tests", "tests\Fiap.TesteTecnico.ClassManager.Infra.Tests\Fiap.TesteTecnico.ClassManager.Infra.Tests.csproj", "{1CB156F2-9220-491F-B66F-DC684E5154B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
