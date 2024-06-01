@@ -6,8 +6,6 @@ using Fiap.TesteTecnico.ClassManager.Service.Queries.GetTurmaById;
 using Fiap.TesteTecnico.ClassManager.Service.Queries.GetTurmas;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Fiap.TesteTecnico.ClassManager.Api.Controllers
 {
