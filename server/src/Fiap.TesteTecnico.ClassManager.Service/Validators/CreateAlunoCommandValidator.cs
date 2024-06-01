@@ -1,5 +1,5 @@
 ﻿using Fiap.TesteTecnico.ClassManager.Domain.Interfaces.Repositories;
-using Fiap.TesteTecnico.ClassManager.Service.Commands.CreateAluno;
+using Fiap.TesteTecnico.ClassManager.Service.Commands.Aluno.CreateAluno;
 using FluentValidation;
 
 namespace Fiap.TesteTecnico.ClassManager.Service.Validators;

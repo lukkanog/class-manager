@@ -1,7 +1,7 @@
 ﻿using Fiap.TesteTecnico.ClassManager.Domain.Dto;
 using Fiap.TesteTecnico.ClassManager.Domain.Interfaces.Services;
-using Fiap.TesteTecnico.ClassManager.Service.Commands.CreateAluno;
-using Fiap.TesteTecnico.ClassManager.Service.Commands.UpdateAluno;
+using Fiap.TesteTecnico.ClassManager.Service.Commands.Aluno.CreateAluno;
+using Fiap.TesteTecnico.ClassManager.Service.Commands.Aluno.UpdateAluno;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

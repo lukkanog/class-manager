@@ -4,9 +4,9 @@ using Fiap.TesteTecnico.ClassManager.Service.Extensions;
 using FluentValidation;
 using MediatR;
 
-namespace Fiap.TesteTecnico.ClassManager.Service.Commands.CreateAluno;
+namespace Fiap.TesteTecnico.ClassManager.Service.Commands.Aluno.CreateAluno;
 
-public class CreateAlunoHandler(IAlunoRepository alunoRepository, IValidator<CreateAlunoCommand> validator) 
+public class CreateAlunoHandler(IAlunoRepository alunoRepository, IValidator<CreateAlunoCommand> validator)
     : IRequestHandler<CreateAlunoCommand, AlunoDto>
 {
     private readonly IAlunoRepository _alunoRepository = alunoRepository;

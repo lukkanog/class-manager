@@ -4,8 +4,8 @@ using Fiap.TesteTecnico.ClassManager.Service.Extensions;
 using FluentValidation;
 using MediatR;
 
-namespace Fiap.TesteTecnico.ClassManager.Service.Commands.UpdateAluno;
-public class UpdateAlunoHandler(IAlunoRepository alunoRepository, IValidator<UpdateAlunoCommand> validator) 
+namespace Fiap.TesteTecnico.ClassManager.Service.Commands.Aluno.UpdateAluno;
+public class UpdateAlunoHandler(IAlunoRepository alunoRepository, IValidator<UpdateAlunoCommand> validator)
     : IRequestHandler<UpdateAlunoCommand, AlunoDto>
 {
     private readonly IAlunoRepository _alunoRepository = alunoRepository;
