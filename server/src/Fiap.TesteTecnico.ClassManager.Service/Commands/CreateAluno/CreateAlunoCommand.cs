@@ -3,6 +3,7 @@ using Fiap.TesteTecnico.ClassManager.Domain.Entities;
 using MediatR;
 
 namespace Fiap.TesteTecnico.ClassManager.Service.Commands.CreateAluno;
+
 public class CreateAlunoCommand : IRequest<AlunoDto>
 {
     public string Nome { get; set; } = string.Empty;

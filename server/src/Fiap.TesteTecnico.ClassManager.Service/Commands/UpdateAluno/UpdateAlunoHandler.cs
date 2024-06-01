@@ -5,6 +5,7 @@ using FluentValidation;
 using MediatR;
 
 namespace Fiap.TesteTecnico.ClassManager.Service.Commands.UpdateAluno;
+
 public class UpdateAlunoHandler(IAlunoRepository alunoRepository, IValidator<UpdateAlunoCommand> validator)
     : IRequestHandler<UpdateAlunoCommand, AlunoDto>
 {
