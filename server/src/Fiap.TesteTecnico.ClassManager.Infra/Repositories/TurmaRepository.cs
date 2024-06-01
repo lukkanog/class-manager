@@ -126,7 +126,7 @@ namespace Fiap.TesteTecnico.ClassManager.Infra.Repositories
         {
             const string sql = @"
                 UPDATE turma
-                SET curso_d = @CursoId, turma = @Nome, ano = @Ano
+                SET curso_id = @CursoId, turma = @Nome, ano = @Ano
                 OUTPUT INSERTED.Id, INSERTED.curso_id AS CursoId, INSERTED.turma AS Nome, INSERTED.Ano
                 WHERE id = @Id
             ";
