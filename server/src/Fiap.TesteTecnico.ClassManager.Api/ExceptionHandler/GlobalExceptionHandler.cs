@@ -46,7 +46,7 @@ namespace Fiap.TesteTecnico.ClassManager.Api.ExceptionHandler
                 problemDetails.Detail = notFoundException.Message;
             }
 
-            if (exception is ValidationException validationException)
+            if (exception is ValidationFailureException validationException)
             {
                 httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 problemDetails.Status = StatusCodes.Status400BadRequest;
