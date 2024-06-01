@@ -6,4 +6,6 @@ public class Aluno
     public string Nome { get; set; } = string.Empty;
     public string Usuario { get; set; } = string.Empty;
     public string Senha { get; set; } = string.Empty;
+
+    public virtual List<Turma> Turmas { get; set; } = [];
 }

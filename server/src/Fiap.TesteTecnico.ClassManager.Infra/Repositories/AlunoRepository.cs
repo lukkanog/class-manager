@@ -10,22 +10,84 @@ public class AlunoRepository(IDbConnectionFactory dbConnectionFactory) : IAlunoR
 
     public async Task<IEnumerable<Aluno>> GetAllAsync()
     {
-        const string sql = @"SELECT Id, Nome, Usuario, Senha FROM aluno";
+        const string sql = @"
+            SELECT 
+                a.Id, a.Nome, a.Usuario, a.Senha,
+                t.id, t.curso_id AS CursoId, t.turma AS Nome, t.Ano
+            FROM aluno a
+            LEFT JOIN aluno_turma at ON at.aluno_id = a.id
+            LEFT JOIN turma t ON t.id = at.turma_id
+        ";
 
         using var connection = _connectionFactory.Create();
         connection.Open();
 
-        return await connection.QueryAsync<Aluno>(sql);
+        var alunoDictionary = new Dictionary<int, Aluno>();
+
+        var result = await connection.QueryAsync<Aluno, Turma, Aluno>(
+            sql,
+            (aluno, turma) =>
+            {
+                if (!alunoDictionary.TryGetValue(aluno.Id, out var currentAluno))
+                {
+                    currentAluno = aluno;
+                    currentAluno.Turmas = new List<Turma>();
+                    alunoDictionary.Add(currentAluno.Id, currentAluno);
+                }
+
+                if (turma is not null && turma.Id != 0)
+                {
+                    currentAluno.Turmas.Add(turma);
+                }
+
+                return currentAluno;
+            },
+            splitOn: "id"
+        );
+
+        return result.Distinct();
     }
 
     public async Task<Aluno> GetByIdAsync(int id)
     {
-        const string sql = @"SELECT Id, Nome, Usuario, Senha FROM aluno WHERE id = @Id";
+        const string sql = @"
+            SELECT 
+                a.Id, a.Nome, a.Usuario, a.Senha,
+                t.id, t.curso_id AS CursoId, t.turma AS Nome, t.Ano
+            FROM aluno a
+            LEFT JOIN aluno_turma at ON at.aluno_id = a.id
+            LEFT JOIN turma t ON t.id = at.turma_id
+            WHERE a.Id = @Id
+        ";
 
         using var connection = _connectionFactory.Create();
         connection.Open();
 
-        return await connection.QueryFirstOrDefaultAsync<Aluno>(sql, new { Id = id });
+        var alunoDictionary = new Dictionary<int, Aluno>();
+
+        var result = await connection.QueryAsync<Aluno, Turma, Aluno>(
+            sql,
+            (aluno, turma) =>
+            {
+                if (!alunoDictionary.TryGetValue(aluno.Id, out var currentAluno))
+                {
+                    currentAluno = aluno;
+                    currentAluno.Turmas = new List<Turma>();
+                    alunoDictionary.Add(currentAluno.Id, currentAluno);
+                }
+
+                if (turma is not null && turma.Id != 0)
+                {
+                    currentAluno.Turmas.Add(turma);
+                }
+
+                return currentAluno;
+            },
+            new { Id = id },
+            splitOn: "id"
+        );
+
+        return result.FirstOrDefault();
     }
 
     public async Task<Aluno> GetByUsuarioAsync(string usuario)
@@ -78,7 +140,7 @@ public class AlunoRepository(IDbConnectionFactory dbConnectionFactory) : IAlunoR
         using var connection = _connectionFactory.Create();
         connection.Open();
 
-        await connection.ExecuteAsync(sql, new { Id = id});
+        await connection.ExecuteAsync(sql, new { Id = id });
 
         return;
     }
