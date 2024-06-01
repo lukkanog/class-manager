@@ -15,7 +15,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CD74BD5C-1FB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{ED94EC1A-35AC-4618-93FA-17DE8FDCBE30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiap.TesteTecnico.ClassManager.Service.Tests", "tests\Fiap.TesteTecnico.ClassManager.Service.Tests\Fiap.TesteTecnico.ClassManager.Service.Tests.csproj", "{59FA44A5-C9B1-4B31-A838-667DC38112C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fiap.TesteTecnico.ClassManager.Service.Tests", "tests\Fiap.TesteTecnico.ClassManager.Service.Tests\Fiap.TesteTecnico.ClassManager.Service.Tests.csproj", "{59FA44A5-C9B1-4B31-A838-667DC38112C7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fiap.TesteTecnico.ClassManager.Domain.Tests", "tests\Fiap.TesteTecnico.ClassManager.Domain.Tessts\Fiap.TesteTecnico.ClassManager.Domain.Tests.csproj", "{6AC765BF-B20F-4168-BDE8-58F242568630}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiap.TesteTecnico.ClassManager.Infra.Tests", "tests\Fiap.TesteTecnico.ClassManager.Infra.Tests\Fiap.TesteTecnico.ClassManager.Infra.Tests.csproj", "{1CB156F2-9220-491F-B66F-DC684E5154B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +47,14 @@ Global
 		{59FA44A5-C9B1-4B31-A838-667DC38112C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59FA44A5-C9B1-4B31-A838-667DC38112C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59FA44A5-C9B1-4B31-A838-667DC38112C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AC765BF-B20F-4168-BDE8-58F242568630}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AC765BF-B20F-4168-BDE8-58F242568630}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AC765BF-B20F-4168-BDE8-58F242568630}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AC765BF-B20F-4168-BDE8-58F242568630}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CB156F2-9220-491F-B66F-DC684E5154B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CB156F2-9220-491F-B66F-DC684E5154B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CB156F2-9220-491F-B66F-DC684E5154B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CB156F2-9220-491F-B66F-DC684E5154B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +65,8 @@ Global
 		{38BD4FFF-1473-410C-B284-990AD9E8B2BA} = {CD74BD5C-1FB2-46EB-BCB7-9CF2C1198A40}
 		{251F4BE2-4197-4A31-8B21-627F08F23B78} = {CD74BD5C-1FB2-46EB-BCB7-9CF2C1198A40}
 		{59FA44A5-C9B1-4B31-A838-667DC38112C7} = {ED94EC1A-35AC-4618-93FA-17DE8FDCBE30}
+		{6AC765BF-B20F-4168-BDE8-58F242568630} = {ED94EC1A-35AC-4618-93FA-17DE8FDCBE30}
+		{1CB156F2-9220-491F-B66F-DC684E5154B2} = {ED94EC1A-35AC-4618-93FA-17DE8FDCBE30}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8E2F6F1B-1FB6-473D-BABD-708653B023CB}
