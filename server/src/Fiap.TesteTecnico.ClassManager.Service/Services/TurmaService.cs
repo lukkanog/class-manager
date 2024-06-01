@@ -5,6 +5,7 @@ using Fiap.TesteTecnico.ClassManager.Domain.Interfaces.Repositories;
 using Fiap.TesteTecnico.ClassManager.Domain.Interfaces.Services;
 
 namespace Fiap.TesteTecnico.ClassManager.Service.Services;
+
 public class TurmaService(ITurmaRepository turmaRepository) : ITurmaService
 {
     private readonly ITurmaRepository _turmaRepository = turmaRepository;

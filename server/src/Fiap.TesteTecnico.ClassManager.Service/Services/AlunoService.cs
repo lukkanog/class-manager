@@ -25,6 +25,9 @@ public class AlunoService(IAlunoRepository alunoRepository) : IAlunoService
     {
         var aluno = await _alunoRepository.GetByIdAsync(id);
 
+        if (aluno is null)
+            throw new NotFoundException($"Aluno de id {id} não foi encontrado.");
+
         return new AlunoDto(aluno.Id, aluno.Nome, aluno.Usuario);
     }
 
