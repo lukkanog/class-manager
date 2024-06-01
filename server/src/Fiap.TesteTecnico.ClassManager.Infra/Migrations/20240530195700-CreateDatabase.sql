@@ -23,8 +23,8 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'aluno_turma')
 BEGIN
     CREATE TABLE aluno_turma (
-        aluno_id INT FOREIGN KEY REFERENCES aluno(id),
-        turma_id INT FOREIGN KEY REFERENCES turma(id),
+        aluno_id INT FOREIGN KEY REFERENCES aluno(id) ON DELETE CASCADE,
+        turma_id INT FOREIGN KEY REFERENCES turma(id) ON DELETE CASCADE,
 
         PRIMARY KEY (aluno_id, turma_id)
     );
