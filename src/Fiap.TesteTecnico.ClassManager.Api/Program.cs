@@ -29,6 +29,8 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwagger();
 
+builder.Services.AddCorsDefaultPolicy("CorsPolicy");
+
 builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
 
@@ -37,6 +39,8 @@ var app = builder.Build();
 app.UseExceptionHandler();
 
 app.UseSerilogRequestLogging();
+
+app.UseCors("CorsPolicy");
 
 if (app.Environment.IsDevelopment())
 {
