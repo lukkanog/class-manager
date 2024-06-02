@@ -3,8 +3,11 @@
 @using Fiap.TesteTecnico.ClassManager.Service.Commands.CreateAluno
 @using Fiap.TesteTecnico.ClassManager.Service.Commands.UpdateAluno
 @using Fiap.TesteTecnico.ClassManager.WebApp.Components
+@using Fiap.TesteTecnico.ClassManager.WebApp.Interfaces
 @inject HttpClient Http
 @inject ISnackbar Snackbar
+@inject IDialogService DialogService
+@inject IErrorHandlingService ErrorHandlingService
 
 <PageTitle>Gerenciar Alunos</PageTitle>
 
@@ -25,7 +28,7 @@
                 <MudTd DataLabel="Usuário">@context.Usuario</MudTd>
                 <MudTd DataLabel="Ações">
                     <MudButton Variant="Variant.Filled" Color="Color.Primary">Editar</MudButton>
-                    <MudButton Variant="Variant.Filled" Color="Color.Secondary">Excluir</MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Secondary" @onclick="@(()=> DeleteAlunoAsync(@context))">Excluir</MudButton>
                 </MudTd>
             </RowTemplate>
         </MudTable>
@@ -56,5 +59,19 @@
             ?? new List<AlunoDto>();
 
         IsLoading = false;
+    }
+
+    private async Task DeleteAlunoAsync(AlunoDto aluno)
+    {
+        var response = await Http.DeleteAsync($"/v1/Alunos/{aluno.Id}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            Snackbar.Add($"Aluno \"{aluno.Usuario}\" excluído com sucesso!", Severity.Success);
+            await GetAlunosAsync();
+            return;
+        }
+
+        await ErrorHandlingService.HandleErrorAsync(response);
     }
 }
