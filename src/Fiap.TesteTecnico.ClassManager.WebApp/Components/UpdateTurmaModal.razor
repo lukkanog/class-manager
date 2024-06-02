@@ -10,16 +10,28 @@
     <DialogContent>
         <MudText Typo="Typo.h4" GutterBottom>Editar turma "@TurmaCommand.Nome"</MudText>
         <MudForm @ref="Form" @onsubmit="UpdateTurmaAsync">
-            <MudTextField @bind-Value="TurmaCommand.Nome" Label="Nome" Required="true" />
-            <MudTextField @bind-Value="TurmaCommand.CursoId" Label="Id do curso" Required="true" InputType="InputType.Number" />
-            <MudDatePicker 
-                Label="Ano da turma"
-                @bind-value="TurmaCommand.Ano"
-                OpenTo="OpenTo.Year"
-                FixMonth="@DateTime.Today.Month"
-                FixDay="@DateTime.Today.Day"
-                DateFormat="yyyy" 
+            <MudTextField 
+                @bind-Value="TurmaCommand.Nome" 
+                Label="Nome" 
+                Required="true" 
             />
+            <MudTextField 
+                Class="my-2" 
+                @bind-Value="TurmaCommand.CursoId" 
+                Label="Id do curso" 
+                Required="true" 
+                InputType="InputType.Number" 
+            />
+            <MudSelect 
+                T="int" 
+                Label="Ano da TurmaCommand" 
+                @bind-Value="TurmaCommand.Ano"
+            >
+                @for (int year = DateTime.Now.Year - 10; year <= DateTime.Now.Year + 10; year++)
+                {
+                    <MudSelectItem T="int" Value="@year" Text="@year.ToString()" />
+                }
+            </MudSelect>
             <MudButton Class="my-4 mr-2" Variant="Variant.Filled" Color="Color.Tertiary" OnClick="UpdateTurmaAsync">Salvar alterações</MudButton>
             <MudButton Variant="Variant.Outlined" OnClick="CloseModal">Cancelar</MudButton>
         </MudForm>
