@@ -69,6 +69,11 @@
             Snackbar.Add("Turma adicionada com sucesso!", Severity.Success);
             CloseModal();
             await OnAdd.InvokeAsync();
+            newTurma = new CreateTurmaCommand()
+            {
+                Ano = DateTime.Now.Year
+            };
+
             return;
         }
 

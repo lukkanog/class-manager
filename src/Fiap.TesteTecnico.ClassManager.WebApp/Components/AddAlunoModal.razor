@@ -48,6 +48,7 @@
             Snackbar.Add("Aluno adicionado com sucesso!", Severity.Success);
             CloseModal();
             await OnAdd.InvokeAsync();
+            newAluno = new CreateAlunoCommand();
             return;
         }
 
