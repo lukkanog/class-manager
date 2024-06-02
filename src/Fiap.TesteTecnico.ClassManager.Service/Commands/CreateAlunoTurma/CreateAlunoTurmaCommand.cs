@@ -6,6 +6,16 @@ namespace Fiap.TesteTecnico.ClassManager.Service.Commands.CreateAlunoTurma;
 
 public class CreateAlunoTurmaCommand : IRequest<AlunoTurmaDto>
 {
+    public CreateAlunoTurmaCommand()
+    {
+    }
+
+    public CreateAlunoTurmaCommand(int alunoId, int turmaId)
+    {
+        AlunoId = alunoId;
+        TurmaId = turmaId;
+    }
+
     public int AlunoId { get; set; }
     public int TurmaId { get; set; }
 
