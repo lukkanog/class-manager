@@ -5,9 +5,16 @@
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudAppBar>
-        Class Manager
-    </MudAppBar>
+    <MudDrawer Open Elevation="5" Variant="@DrawerVariant.Persistent" Color="Color.Dark">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.subtitle2" Color="Color.Secondary">CLASS MANAGER</MudText>
+        </MudDrawerHeader>
+        <MudNavMenu Color="Color.Secondary">
+            <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home" IconColor="Color.Inherit">Home</MudNavLink>
+            <MudNavLink Href="/alunos" Icon="@Icons.Material.Filled.Groups" IconColor="Color.Inherit">Alunos</MudNavLink>
+            <MudNavLink Href="/turmas" Icon="@Icons.Material.Filled.School" IconColor="Color.Inherit">Turmas</MudNavLink>
+        </MudNavMenu>
+    </MudDrawer>
     <MudMainContent>
         <MudContainer>
             @Body
