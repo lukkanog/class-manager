@@ -2,6 +2,8 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    background: #1c2022;
+    color: #acc1cc;
 }
 
 main {
@@ -9,12 +11,13 @@ main {
 }
 
 .sidebar {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+    background: #171a1c;
+    color: #ed145b;
 }
 
 .top-row {
-    background-color: #f7f7f7;
-    border-bottom: 1px solid #d6d5d5;
+    background: #1c2022 ;
+    border-bottom: 1px solid #ed145b;
     justify-content: flex-end;
     height: 3.5rem;
     display: flex;
@@ -25,6 +28,7 @@ main {
         white-space: nowrap;
         margin-left: 1.5rem;
         text-decoration: none;
+        color: #ed145b
     }
 
     .top-row ::deep a:hover, .top-row ::deep .btn-link:hover {

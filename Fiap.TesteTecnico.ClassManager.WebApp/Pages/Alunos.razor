@@ -1,0 +1,53 @@
+﻿@page "/alunos"
+@using Fiap.TesteTecnico.ClassManager.Domain.Dto
+@using Fiap.TesteTecnico.ClassManager.Service.Commands.CreateAluno
+@using Fiap.TesteTecnico.ClassManager.Service.Commands.UpdateAluno
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+
+<PageTitle>Gerenciar Alunos</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Medium">
+    <MudPaper Class="my-4 pa-8">
+        <MudText Typo="Typo.h4" GutterBottom>Lista de Alunos</MudText>
+        <MudTable Items="ListaAlunos">
+            <HeaderContent>
+                <MudTh>Nome</MudTh>
+                <MudTh>Usuário</MudTh>
+                <MudTh>Ações</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Nome">@context.Nome</MudTd>
+                <MudTd DataLabel="Usuário">@context.Usuario</MudTd>
+                <MudTd DataLabel="Ações">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary">Editar</MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Secondary">Excluir</MudButton>
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
+    </MudPaper>
+</MudContainer>
+
+<MudOverlay Visible="IsLoading" DarkBackground="true">
+    <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+</MudOverlay>
+
+@code {
+    private IEnumerable<AlunoDto> ListaAlunos { get; set; } = new List<AlunoDto>();
+    private bool IsLoading { get; set; } = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetAlunosAsync();
+    }
+
+    private async Task GetAlunosAsync()
+    {
+        IsLoading = true;
+
+        ListaAlunos = await Http.GetFromJsonAsync<List<AlunoDto>>("/v1/Alunos")
+            ?? new List<AlunoDto>();
+
+        IsLoading = false;
+    }
+}

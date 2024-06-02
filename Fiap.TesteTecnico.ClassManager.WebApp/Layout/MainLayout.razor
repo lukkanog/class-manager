@@ -1,16 +1,16 @@
 ﻿@inherits LayoutComponentBase
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://github.com/lukkanog/class-manager" target="_blank">GitHub</a>
-        </div>
+<MudThemeProvider IsDarkMode="true"/>
+<MudDialogProvider />
+<MudSnackbarProvider />
 
-        <article class="content px-4">
+<MudLayout>
+    <MudAppBar>
+        Class Manager
+    </MudAppBar>
+    <MudMainContent>
+        <MudContainer>
             @Body
-        </article>
-    </main>
-</div>
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
