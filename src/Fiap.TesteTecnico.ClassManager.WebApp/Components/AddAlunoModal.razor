@@ -14,7 +14,7 @@
             <MudTextField @bind-Value="newAluno.Nome" Label="Nome" Required="true" />
             <MudTextField @bind-Value="newAluno.Usuario" Label="Usuário" Required="true" />
             <MudTextField @bind-Value="newAluno.Senha" Label="Senha" Required="true" InputType="InputType.Password" />
-            <MudTextField @bind-Value="newAluno.ConfirmaSenha" Label="Confirme a Senha" Required="true" Password="true" InputType="InputType.Password" />
+            <MudTextField @bind-Value="newAluno.ConfirmaSenha" Label="Confirme a Senha" Required="true" InputType="InputType.Password" />
             <MudButton Class="my-4 mr-2" Variant="Variant.Filled" Color="Color.Tertiary" OnClick="AddAlunoAsync">Adicionar</MudButton>
             <MudButton Variant="Variant.Outlined" OnClick="CloseModal">Cancelar</MudButton>
         </MudForm>
