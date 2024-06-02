@@ -1,6 +1,0 @@
-@Fiap.TesteTecnico.ClassManager.Api_HostAddress = http://localhost:5239
-
-GET {{Fiap.TesteTecnico.ClassManager.Api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
