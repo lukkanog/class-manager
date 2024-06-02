@@ -1,0 +1,88 @@
+﻿@page "/turmas"
+@using Fiap.TesteTecnico.ClassManager.Domain.Dto
+@using Fiap.TesteTecnico.ClassManager.Service.Commands.CreateTurma
+@using Fiap.TesteTecnico.ClassManager.Service.Commands.UpdateTurma
+@using Fiap.TesteTecnico.ClassManager.WebApp.Components
+@using Fiap.TesteTecnico.ClassManager.WebApp.Interfaces
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+@inject IDialogService DialogService
+@inject IErrorHandlingService ErrorHandlingService
+
+<PageTitle>Gerenciar Turmas</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Medium">
+    <MudPaper Class="my-4 pa-8">
+        <MudElement Class="d-flex justify-space-between flex-grow-1 gap-4 mb-4">
+            <MudText Typo="Typo.h4" GutterBottom>Lista de Turmas</MudText>
+            <MudButton Variant="Variant.Filled" Color="Color.Tertiary" OnClick="() => IsAddTurmaModalOpen = true">Adicionar Turma</MudButton>
+        </MudElement>
+        <MudTable Items="ListaTurmas">
+            <HeaderContent>
+                <MudTh>Nome</MudTh>
+                <MudTh>Id do curso</MudTh>
+                <MudTh>Ano</MudTh>
+                <MudTh>Ações</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Nome">@context.Nome</MudTd>
+                <MudTd DataLabel="Id do curso">@context.CursoId</MudTd>
+                <MudTd DataLabel="Ano">@context.Ano</MudTd>
+                <MudTd DataLabel="Ações">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="@(()=> SetTurmaToUpdate(@context))">Editar</MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Secondary" @onclick="@(()=> DeleteTurmaAsync(@context))">Excluir</MudButton>
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
+    </MudPaper>
+</MudContainer>
+
+<MudOverlay Visible="IsLoading" DarkBackground="true">  
+    <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+</MudOverlay>
+
+<AddTurmaModal @bind-IsOpen="IsAddTurmaModalOpen" OnAdd="GetTurmasAsync" />
+<UpdateTurmaModal @bind-IsOpen="IsUpdateTurmaModalOpen" Turma="TurmaToUpdate" OnUpdate="GetTurmasAsync" />
+
+@code {
+    private IEnumerable<TurmaDto> ListaTurmas { get; set; } = new List<TurmaDto>();
+    private bool IsLoading { get; set; } = false;
+    private bool IsAddTurmaModalOpen { get; set; } = false;
+    private bool IsUpdateTurmaModalOpen { get; set; } = false;
+    private TurmaDto? TurmaToUpdate { get; set; } = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetTurmasAsync();
+    }
+
+    private async Task GetTurmasAsync()
+    {
+        IsLoading = true;
+
+        ListaTurmas = await Http.GetFromJsonAsync<List<TurmaDto>>("/v1/Turmas")
+            ?? new List<TurmaDto>();
+
+        IsLoading = false;
+    }
+
+    private async Task DeleteTurmaAsync(TurmaDto aluno)
+    {
+        var response = await Http.DeleteAsync($"/v1/Turmas/{aluno.Id}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            Snackbar.Add($"Turma \"{aluno.Nome}\" excluído com sucesso!", Severity.Success);
+            await GetTurmasAsync();
+            return;
+        }
+
+        await ErrorHandlingService.HandleErrorAsync(response);
+    }
+
+    private void SetTurmaToUpdate(TurmaDto aluno)
+    {
+        TurmaToUpdate = aluno;
+        IsUpdateTurmaModalOpen = true;
+    }
+}
