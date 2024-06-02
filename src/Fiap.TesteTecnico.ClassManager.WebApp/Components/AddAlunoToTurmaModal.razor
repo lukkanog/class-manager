@@ -1,0 +1,83 @@
+﻿@using Fiap.TesteTecnico.ClassManager.Domain.Dto
+@using Fiap.TesteTecnico.ClassManager.Service.Commands.CreateAlunoTurma
+@using Fiap.TesteTecnico.ClassManager.WebApp.Interfaces
+@using Fiap.TesteTecnico.ClassManager.WebApp.Models
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+@inject IErrorHandlingService ErrorHandlingService
+
+<MudDialog IsVisible="IsOpen" Class="pa-5">
+    <DialogContent>
+        <MudText Typo="Typo.h4" GutterBottom>Relacionar aluno a turma @Turma.Nome</MudText>
+        <MudForm @ref="Form" @onsubmit="AddAlunoTurmaAsync">
+            <MudSelect @bind-Value="selectedAlunoId" Label="Selecione um Aluno" Required="true">
+                <MudSelectItem Value="0" Disabled="true">Selecione...</MudSelectItem>
+                @foreach (var aluno in alunos)
+                {
+                    var isDisabled = Turma.Alunos.Any(a => a.Id == aluno.Id);
+                    <MudSelectItem Value="@aluno.Id" Disabled="@isDisabled">@aluno.Nome</MudSelectItem>
+                }
+            </MudSelect>
+            <MudButton 
+                Class="my-4 mr-2" 
+                Variant="Variant.Filled" 
+                Color="Color.Tertiary" 
+                type="submit"
+                OnClick="AddAlunoTurmaAsync"
+            >
+                Adicionar
+            </MudButton>
+            <MudButton Variant="Variant.Outlined" OnClick="CloseModal">Cancelar</MudButton>
+        </MudForm>
+    </DialogContent>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public bool IsOpen { get; set; } = false;
+
+    [Parameter]
+    public EventCallback<bool> IsOpenChanged { get; set; }
+
+    [Parameter]
+    public EventCallback OnAdd { get; set; }
+
+    [Parameter]
+    public TurmaDto Turma { get; set; }
+
+    private MudForm Form { get; set; }
+    private List<AlunoDto> alunos = new List<AlunoDto>();
+    private int selectedAlunoId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAlunosAsync();
+    }
+
+    private async Task LoadAlunosAsync()
+    {
+        alunos = await Http.GetFromJsonAsync<List<AlunoDto>>("/v1/Alunos");
+    }
+
+    private void CloseModal()
+    {
+        IsOpen = false;
+        IsOpenChanged.InvokeAsync();
+    }
+
+    private async Task AddAlunoTurmaAsync()
+    {
+        var createAlunoTurmaCommand = new CreateAlunoTurmaCommand(selectedAlunoId, Turma.Id);
+        var response = await Http.PostAsJsonAsync("/v1/AlunoTurma", createAlunoTurmaCommand);
+
+        if (response.IsSuccessStatusCode)
+        {
+            Snackbar.Add("Aluno adicionado com sucesso!", Severity.Success);
+            CloseModal();
+            await OnAdd.InvokeAsync();
+            return;
+        }
+                
+        await ErrorHandlingService.HandleErrorAsync(response);
+    }
+}
