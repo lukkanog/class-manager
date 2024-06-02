@@ -1,0 +1,46 @@
+﻿@using Fiap.TesteTecnico.ClassManager.Domain.Dto
+@using Fiap.TesteTecnico.ClassManager.Service.Commands.CreateAluno
+@using Fiap.TesteTecnico.ClassManager.Service.Commands.UpdateAluno
+@using Fiap.TesteTecnico.ClassManager.WebApp.Interfaces
+@using Fiap.TesteTecnico.ClassManager.WebApp.Models
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+@inject IErrorHandlingService ErrorHandlingService
+
+<MudDialog IsVisible="IsOpen" Class="pa-5">
+    <DialogContent>
+        <MudText Typo="Typo.h4" GutterBottom>Adicionar Novo Aluno</MudText>
+        <MudForm @ref="Form" @onsubmit="AddAlunoAsync">
+            <MudTextField @bind-Value="novoAluno.Nome" Label="Nome" Required="true" />
+            <MudTextField @bind-Value="novoAluno.Usuario" Label="Usuário" Required="true" />
+            <MudTextField @bind-Value="novoAluno.Senha" Label="Senha" Required="true" InputType="InputType.Password" />
+            <MudTextField @bind-Value="novoAluno.ConfirmaSenha" Label="Confirme a Senha" Required="true" Password="true" InputType="InputType.Password" />
+            <MudButton Class="my-4 mr-2" Variant="Variant.Filled" Color="Color.Tertiary" OnClick="AddAlunoAsync">Adicionar</MudButton>
+            <MudButton Variant="Variant.Outlined" OnClick="CloseModal">Cancelar</MudButton>
+        </MudForm>
+    </DialogContent>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public bool IsOpen { get; set; } = false;
+
+    private MudForm Form { get; set; }
+    private CreateAlunoCommand novoAluno = new CreateAlunoCommand();
+
+    private void CloseModal() => IsOpen = false;
+
+    private async Task AddAlunoAsync()
+    {
+        var response = await Http.PostAsJsonAsync("/v1/Alunos", novoAluno);
+
+        if (response.IsSuccessStatusCode)
+        {
+            Snackbar.Add("Aluno adicionado com sucesso!", Severity.Success);
+            CloseModal();
+            return;
+        }
+
+        await ErrorHandlingService.HandleErrorAsync(response);
+    }
+}

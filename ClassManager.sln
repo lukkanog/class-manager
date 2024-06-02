@@ -29,7 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Infra", "3 - Infra", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Service", "4 - Service", "{C3D507B2-A843-41F9-A7CE-20A01A5C07F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiap.TesteTecnico.ClassManager.WebApp", "Fiap.TesteTecnico.ClassManager.WebApp\Fiap.TesteTecnico.ClassManager.WebApp.csproj", "{04569B64-C061-4EBD-99E3-72888A7E9659}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fiap.TesteTecnico.ClassManager.WebApp", "Fiap.TesteTecnico.ClassManager.WebApp\Fiap.TesteTecnico.ClassManager.WebApp.csproj", "{04569B64-C061-4EBD-99E3-72888A7E9659}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

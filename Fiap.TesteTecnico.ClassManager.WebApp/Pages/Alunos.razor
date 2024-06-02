@@ -2,6 +2,7 @@
 @using Fiap.TesteTecnico.ClassManager.Domain.Dto
 @using Fiap.TesteTecnico.ClassManager.Service.Commands.CreateAluno
 @using Fiap.TesteTecnico.ClassManager.Service.Commands.UpdateAluno
+@using Fiap.TesteTecnico.ClassManager.WebApp.Components
 @inject HttpClient Http
 @inject ISnackbar Snackbar
 
@@ -9,7 +10,10 @@
 
 <MudContainer MaxWidth="MaxWidth.Medium">
     <MudPaper Class="my-4 pa-8">
-        <MudText Typo="Typo.h4" GutterBottom>Lista de Alunos</MudText>
+        <MudElement Class="d-flex justify-space-between flex-grow-1 gap-4 mb-4">
+            <MudText Typo="Typo.h4" GutterBottom>Lista de Alunos</MudText>
+            <MudButton Variant="Variant.Filled" Color="Color.Tertiary" OnClick="() => IsAddAlunoModalOpen = true">Adicionar Aluno</MudButton>
+        </MudElement>
         <MudTable Items="ListaAlunos">
             <HeaderContent>
                 <MudTh>Nome</MudTh>
@@ -32,9 +36,12 @@
     <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
 </MudOverlay>
 
+<AddAlunoModal IsOpen="IsAddAlunoModalOpen" />
+
 @code {
     private IEnumerable<AlunoDto> ListaAlunos { get; set; } = new List<AlunoDto>();
     private bool IsLoading { get; set; } = false;
+    private bool IsAddAlunoModalOpen { get; set; } = false;
 
     protected override async Task OnInitializedAsync()
     {
