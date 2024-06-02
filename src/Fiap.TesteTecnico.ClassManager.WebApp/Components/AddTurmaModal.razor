@@ -1,0 +1,62 @@
+﻿@using Fiap.TesteTecnico.ClassManager.Domain.Dto
+@using Fiap.TesteTecnico.ClassManager.Service.Commands.CreateTurma
+@using Fiap.TesteTecnico.ClassManager.WebApp.Interfaces
+@using Fiap.TesteTecnico.ClassManager.WebApp.Models
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+@inject IErrorHandlingService ErrorHandlingService
+
+<MudDialog IsVisible="IsOpen" Class="pa-5">
+    <DialogContent>
+        <MudText Typo="Typo.h4" GutterBottom>Adicionar Nova Turma</MudText>
+        <MudForm @ref="Form" @onsubmit="AddTurmaAsync">
+            <MudTextField @bind-Value="newTurma.Nome" Label="Nome" Required="true" />
+            <MudTextField @bind-Value="newTurma.CursoId" Label="Id do curso" Required="true" InputType="InputType.Number" />
+            <MudDatePicker 
+                Label="Ano da turma" 
+                @bind-value="newTurma.Ano" 
+                OpenTo="OpenTo.Year" 
+                FixMonth="@DateTime.Today.Month" 
+                FixDay="@DateTime.Today.Day" 
+                DateFormat="yyyy" 
+            />
+            <MudButton Class="my-4 mr-2" Variant="Variant.Filled" Color="Color.Tertiary" OnClick="AddTurmaAsync">Adicionar</MudButton>
+            <MudButton Variant="Variant.Outlined" OnClick="CloseModal">Cancelar</MudButton>
+        </MudForm>
+    </DialogContent>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public bool IsOpen { get; set; } = false;
+
+    [Parameter]
+    public EventCallback<bool> IsOpenChanged { get; set; }
+
+    [Parameter]
+    public EventCallback OnAdd { get; set; }
+
+    private MudForm Form { get; set; }
+    private CreateTurmaCommand newTurma = new CreateTurmaCommand();
+
+    private void CloseModal()
+    {
+        IsOpen = false;
+        IsOpenChanged.InvokeAsync();
+    }
+
+    private async Task AddTurmaAsync()
+    {
+        var response = await Http.PostAsJsonAsync("/v1/Turmas", newTurma);
+
+        if (response.IsSuccessStatusCode)
+        {
+            Snackbar.Add("Turma adicionada com sucesso!", Severity.Success);
+            CloseModal();
+            await OnAdd.InvokeAsync();
+            return;
+        }
+
+        await ErrorHandlingService.HandleErrorAsync(response);
+    }
+}
