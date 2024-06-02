@@ -11,10 +11,10 @@
     <DialogContent>
         <MudText Typo="Typo.h4" GutterBottom>Adicionar Novo Aluno</MudText>
         <MudForm @ref="Form" @onsubmit="AddAlunoAsync">
-            <MudTextField @bind-Value="novoAluno.Nome" Label="Nome" Required="true" />
-            <MudTextField @bind-Value="novoAluno.Usuario" Label="Usuário" Required="true" />
-            <MudTextField @bind-Value="novoAluno.Senha" Label="Senha" Required="true" InputType="InputType.Password" />
-            <MudTextField @bind-Value="novoAluno.ConfirmaSenha" Label="Confirme a Senha" Required="true" Password="true" InputType="InputType.Password" />
+            <MudTextField @bind-Value="newAluno.Nome" Label="Nome" Required="true" />
+            <MudTextField @bind-Value="newAluno.Usuario" Label="Usuário" Required="true" />
+            <MudTextField @bind-Value="newAluno.Senha" Label="Senha" Required="true" InputType="InputType.Password" />
+            <MudTextField @bind-Value="newAluno.ConfirmaSenha" Label="Confirme a Senha" Required="true" Password="true" InputType="InputType.Password" />
             <MudButton Class="my-4 mr-2" Variant="Variant.Filled" Color="Color.Tertiary" OnClick="AddAlunoAsync">Adicionar</MudButton>
             <MudButton Variant="Variant.Outlined" OnClick="CloseModal">Cancelar</MudButton>
         </MudForm>
@@ -24,6 +24,7 @@
 @code {
     [Parameter]
     public bool IsOpen { get; set; } = false;
+
     [Parameter]
     public EventCallback<bool> IsOpenChanged { get; set; }
 
@@ -31,7 +32,7 @@
     public EventCallback OnAdd { get; set; }
 
     private MudForm Form { get; set; }
-    private CreateAlunoCommand novoAluno = new CreateAlunoCommand();
+    private CreateAlunoCommand newAluno = new CreateAlunoCommand();
 
     private void CloseModal()
     {
@@ -41,7 +42,7 @@
 
     private async Task AddAlunoAsync()
     {
-        var response = await Http.PostAsJsonAsync("/v1/Alunos", novoAluno);
+        var response = await Http.PostAsJsonAsync("/v1/Alunos", newAluno);
 
         if (response.IsSuccessStatusCode)
         {

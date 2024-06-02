@@ -1,0 +1,85 @@
+﻿@using Fiap.TesteTecnico.ClassManager.Domain.Dto
+@using Fiap.TesteTecnico.ClassManager.Service.Commands.UpdateAluno
+@using Fiap.TesteTecnico.ClassManager.Service.Commands.UpdateAluno
+@using Fiap.TesteTecnico.ClassManager.WebApp.Interfaces
+@using Fiap.TesteTecnico.ClassManager.WebApp.Models
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+@inject IErrorHandlingService ErrorHandlingService
+
+<MudDialog IsVisible="IsOpen" Class="pa-5">
+    <DialogContent>
+        <MudText Typo="Typo.h4" GutterBottom>Editar aluno "@AlunoCommand.Usuario"</MudText>
+        <MudForm @ref="Form" @onsubmit="UpdateAlunoAsync">
+            <MudTextField @bind-Value="AlunoCommand.Nome" Label="Nome" Required="true" />
+            <MudTextField @bind-Value="AlunoCommand.Usuario" Label="Usuário" Required="true" />
+            <MudTextField @bind-Value="AlunoCommand.Senha" Label="Senha" Required="false" InputType="InputType.Password" S/>
+            <MudTextField @bind-Value="AlunoCommand.ConfirmaSenha" Label="Confirme a Senha" Required="false" InputType="InputType.Password" />
+            <MudButton Class="my-4 mr-2" Variant="Variant.Filled" Color="Color.Tertiary" OnClick="UpdateAlunoAsync">Salvar alterações</MudButton>
+            <MudButton Variant="Variant.Outlined" OnClick="CloseModal">Cancelar</MudButton>
+        </MudForm>
+    </DialogContent>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public bool IsOpen { get; set; } = false;
+    [Parameter]
+    public EventCallback<bool> IsOpenChanged { get; set; }
+
+    [Parameter]
+    public EventCallback OnUpdate { get; set; }
+
+    [Parameter]
+    public AlunoDto Aluno { get; set; }
+
+    private MudForm Form { get; set; }
+
+    private UpdateAlunoCommand AlunoCommand = new UpdateAlunoCommand();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var shouldUpdateData = Aluno is not null && Aluno.Id != 0 && AlunoCommand.Id != Aluno.Id;
+
+        if (shouldUpdateData)
+        {
+            var response = await Http.GetFromJsonAsync<AlunoDto>($"/v1/Alunos/{Aluno.Id}");
+
+            if (response is not null)
+            {
+                AlunoCommand = new()
+                {
+                    Id = response.Id,
+                    Nome = response.Nome,
+                    Usuario = response.Usuario,
+                };
+            }
+        }
+    }
+
+    private void CloseModal()
+    {
+        IsOpen = false;
+        IsOpenChanged.InvokeAsync();
+    }
+
+    private async Task UpdateAlunoAsync()
+    {
+        if (string.IsNullOrEmpty(AlunoCommand.Senha))
+        {
+            AlunoCommand.Senha = null;
+        }
+
+        var response = await Http.PutAsJsonAsync("/v1/Alunos", AlunoCommand);
+
+        if (response.IsSuccessStatusCode)
+        {
+            Snackbar.Add($"Aluno \"{AlunoCommand.Usuario}\" alterado com sucesso!", Severity.Success);
+            CloseModal();
+            await OnUpdate.InvokeAsync();
+            return;
+        }
+
+        await ErrorHandlingService.HandleErrorAsync(response);
+    }
+}

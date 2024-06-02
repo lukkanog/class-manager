@@ -27,9 +27,11 @@
                 <MudTd DataLabel="Nome">@context.Nome</MudTd>
                 <MudTd DataLabel="Usuário">@context.Usuario</MudTd>
                 <MudTd DataLabel="Ações">
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary">Editar</MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="@(()=> SetAlunoToUpdate(@context))">Editar</MudButton>
                     <MudButton Variant="Variant.Filled" Color="Color.Secondary" @onclick="@(()=> DeleteAlunoAsync(@context))">Excluir</MudButton>
                 </MudTd>
+
+                
             </RowTemplate>
         </MudTable>
     </MudPaper>
@@ -40,11 +42,14 @@
 </MudOverlay>
 
 <AddAlunoModal @bind-IsOpen="IsAddAlunoModalOpen" OnAdd="GetAlunosAsync" />
+<UpdateAlunoModal @bind-IsOpen="IsUpdateAlunoModalOpen" Aluno="AlunoToUpdate" OnUpdate="GetAlunosAsync" />
 
 @code {
     private IEnumerable<AlunoDto> ListaAlunos { get; set; } = new List<AlunoDto>();
     private bool IsLoading { get; set; } = false;
     private bool IsAddAlunoModalOpen { get; set; } = false;
+    private bool IsUpdateAlunoModalOpen { get; set; } = false;
+    private AlunoDto? AlunoToUpdate { get; set; } = null;
 
     protected override async Task OnInitializedAsync()
     {
@@ -73,5 +78,11 @@
         }
 
         await ErrorHandlingService.HandleErrorAsync(response);
+    }
+
+    private void SetAlunoToUpdate(AlunoDto aluno)
+    {
+        AlunoToUpdate = aluno;
+        IsUpdateAlunoModalOpen = true;
     }
 }
