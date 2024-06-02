@@ -1,0 +1,86 @@
+﻿@using Fiap.TesteTecnico.ClassManager.Domain.Dto
+@using Fiap.TesteTecnico.ClassManager.Service.Commands.UpdateTurma
+@using Fiap.TesteTecnico.ClassManager.WebApp.Interfaces
+@using Fiap.TesteTecnico.ClassManager.WebApp.Models
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+@inject IErrorHandlingService ErrorHandlingService
+
+<MudDialog IsVisible="IsOpen" Class="pa-5">
+    <DialogContent>
+        <MudText Typo="Typo.h4" GutterBottom>Editar turma "@TurmaCommand.Nome"</MudText>
+        <MudForm @ref="Form" @onsubmit="UpdateTurmaAsync">
+            <MudTextField @bind-Value="TurmaCommand.Nome" Label="Nome" Required="true" />
+            <MudTextField @bind-Value="TurmaCommand.CursoId" Label="Id do curso" Required="true" InputType="InputType.Number" />
+            <MudDatePicker 
+                Label="Ano da turma"
+                @bind-value="TurmaCommand.Ano"
+                OpenTo="OpenTo.Year"
+                FixMonth="@DateTime.Today.Month"
+                FixDay="@DateTime.Today.Day"
+                DateFormat="yyyy" 
+            />
+            <MudButton Class="my-4 mr-2" Variant="Variant.Filled" Color="Color.Tertiary" OnClick="UpdateTurmaAsync">Salvar alterações</MudButton>
+            <MudButton Variant="Variant.Outlined" OnClick="CloseModal">Cancelar</MudButton>
+        </MudForm>
+    </DialogContent>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public bool IsOpen { get; set; } = false;
+    [Parameter]
+    public EventCallback<bool> IsOpenChanged { get; set; }
+
+    [Parameter]
+    public EventCallback OnUpdate { get; set; }
+
+    [Parameter]
+    public TurmaDto Turma { get; set; }
+
+    private MudForm Form { get; set; }
+
+    private UpdateTurmaCommand TurmaCommand = new UpdateTurmaCommand();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var shouldUpdateData = Turma is not null && Turma.Id != 0 && TurmaCommand.Id != Turma.Id;
+
+        if (shouldUpdateData)
+        {
+            var response = await Http.GetFromJsonAsync<TurmaDto>($"/v1/Turmas/{Turma.Id}");
+
+            if (response is not null)
+            {
+                TurmaCommand = new()
+                {
+                    Id = response.Id,
+                    CursoId = response.CursoId,
+                    Nome = response.Nome,
+                    Ano = response.Ano,
+                };
+            }
+        }
+    }
+
+    private void CloseModal()
+    {
+        IsOpen = false;
+        IsOpenChanged.InvokeAsync();
+    }
+
+    private async Task UpdateTurmaAsync()
+    {
+        var response = await Http.PutAsJsonAsync("/v1/Turmas", TurmaCommand);
+
+        if (response.IsSuccessStatusCode)
+        {
+            Snackbar.Add($"Turma \"{TurmaCommand.Nome}\" alterado com sucesso!", Severity.Success);
+            CloseModal();
+            await OnUpdate.InvokeAsync();
+            return;
+        }
+
+        await ErrorHandlingService.HandleErrorAsync(response);
+    }
+}
