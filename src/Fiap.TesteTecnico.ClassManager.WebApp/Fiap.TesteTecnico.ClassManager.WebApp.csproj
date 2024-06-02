@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Fiap.TesteTecnico.ClassManager.Service\Fiap.TesteTecnico.ClassManager.Service.csproj" />
+    <ProjectReference Include="..\Fiap.TesteTecnico.ClassManager.Service\Fiap.TesteTecnico.ClassManager.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>
