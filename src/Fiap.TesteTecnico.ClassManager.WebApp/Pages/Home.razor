@@ -1,7 +1,104 @@
 ﻿@page "/"
+@using System.Net.Http.Json
+@using Fiap.TesteTecnico.ClassManager.Domain.Dto
+@using Fiap.TesteTecnico.ClassManager.WebApp.Interfaces
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+@inject IErrorHandlingService ErrorHandlingService
 
-<PageTitle>Home</PageTitle>
+<MudContainer MaxWidth="MaxWidth.Medium" Class="">
+    <MudElement Class="d-flex justify-space-between gap-4 mb-4">
+        @if(!ListaTurmas.Any())
+        {
+            <MudElement>
+                <MudText Typo="Typo.h4" GutterBottom>Bem vindo ao Class Manager!</MudText>
+                <MudText Typo="Typo.body1" GutterBottom>
+                    Quando houverem turmas cadastradas, você poderá gerenciá-las aqui nessa página. 
+                </MudText>
+                <MudText Typo="Typo.body1" GutterBottom>
+                    Para cadastrar turmas, acesse a
+                    <MudLink Href="/turmas" Color="Color.Secondary">página de turmas.</MudLink>
+                </MudText>
+            </MudElement>
 
-<h1>Hello, world!</h1>
+            return;
+        }
 
-Welcome to your new app.
+        <MudPaper Class="my-4 pa-8 flex-grow-1">
+            <MudText Typo="Typo.h6" GutterBottom>Lista de Turmas</MudText>
+            <MudText Typo="Typo.caption" GutterBottom>Selecione uma turma para visualizar seus alunos</MudText>
+            <MudList Clickable="true" Dense="true" Class="mr-4 my-5">
+                @foreach (var turma in ListaTurmas)
+                {
+                    <MudDivider />
+                    <MudListItem Class="py-2" OnClick="@(() => SelectTurma(turma))">@turma.Nome</MudListItem>
+                }
+            </MudList>  
+        </MudPaper>
+        <MudPaper Class="flex-grow-1 my-4 pa-8">
+            @if (SelectedTurma != null)
+            {
+                <MudText Typo="Typo.h6" Class="Mb-5" GutterBottom>Alunos da Turma @SelectedTurma.Nome</MudText>
+
+                @if (SelectedTurma.Alunos.Any())
+                {
+                    <MudTable Items="@SelectedTurma.Alunos" Dense="true">
+                        <HeaderContent>
+                            <MudTh>Nome</MudTh>
+                            <MudTh>Ações</MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd>@context.Nome</MudTd>
+                            <MudTd Class="py-2">
+                                <MudButton Variant="Variant.Outlined" Color="Color.Secondary" @onclick="@(() => RemoveAlunoFromSelectedTurma(@context))">Remover da turma</MudButton>
+                            </MudTd>
+                        </RowTemplate>
+                    </MudTable>
+                }
+            }
+            else
+            {
+                <MudText Typo="Typo.h6" GutterBottom>Selecione uma Turma para ver seus Alunos.</MudText>
+            }
+        </MudPaper>
+    </MudElement>
+</MudContainer>
+
+@code {
+    private IEnumerable<TurmaDto> ListaTurmas { get; set; } = new List<TurmaDto>();
+    private TurmaDto SelectedTurma { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadTurmasAsync();
+    }
+
+    private async Task LoadTurmasAsync()
+    {
+        ListaTurmas = await Http.GetFromJsonAsync<List<TurmaDto>>("/v1/Turmas")
+            ?? new List<TurmaDto>();
+    }
+
+    private void SelectTurma(TurmaDto turma)
+    {
+        SelectedTurma = turma;
+    }
+
+    private async Task RemoveAlunoFromSelectedTurma(AlunoDto aluno)
+    {
+        var response = await Http.DeleteAsync($"/v1/AlunoTurma/aluno/{aluno.Id}/turma/{SelectedTurma.Id}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            Snackbar.Add(
+                $"Aluno \"{aluno.Nome}\" removido da turma \"{SelectedTurma.Nome}\" com sucesso!", 
+                Severity.Success
+            );
+            await LoadTurmasAsync();
+            SelectedTurma = ListaTurmas.FirstOrDefault(x => x.Id == SelectedTurma.Id);
+            return;
+        }
+
+        await ErrorHandlingService.HandleErrorAsync(response);
+    }
+}
