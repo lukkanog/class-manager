@@ -24,11 +24,20 @@
 @code {
     [Parameter]
     public bool IsOpen { get; set; } = false;
+    [Parameter]
+    public EventCallback<bool> IsOpenChanged { get; set; }
+
+    [Parameter]
+    public EventCallback OnAdd { get; set; }
 
     private MudForm Form { get; set; }
     private CreateAlunoCommand novoAluno = new CreateAlunoCommand();
 
-    private void CloseModal() => IsOpen = false;
+    private void CloseModal()
+    {
+        IsOpen = false;
+        IsOpenChanged.InvokeAsync();
+    }
 
     private async Task AddAlunoAsync()
     {
@@ -38,6 +47,7 @@
         {
             Snackbar.Add("Aluno adicionado com sucesso!", Severity.Success);
             CloseModal();
+            await OnAdd.InvokeAsync();
             return;
         }
 

@@ -32,11 +32,11 @@
     </MudPaper>
 </MudContainer>
 
-<MudOverlay Visible="IsLoading" DarkBackground="true">
+<MudOverlay Visible="IsLoading" DarkBackground="true">  
     <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
 </MudOverlay>
 
-<AddAlunoModal IsOpen="IsAddAlunoModalOpen" />
+<AddAlunoModal @bind-IsOpen="IsAddAlunoModalOpen" OnAdd="GetAlunosAsync" />
 
 @code {
     private IEnumerable<AlunoDto> ListaAlunos { get; set; } = new List<AlunoDto>();
