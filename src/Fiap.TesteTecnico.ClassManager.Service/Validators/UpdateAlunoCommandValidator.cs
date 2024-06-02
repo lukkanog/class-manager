@@ -12,13 +12,16 @@ public class UpdateAlunoCommandValidator : AbstractValidator<UpdateAlunoCommand>
     {
         _alunoRepository = alunoRepository;
 
-        RuleFor(x => x.Senha)
+        When(x => x.Senha is not null, () =>
+        {
+            RuleFor(x => x.Senha)
             .Equal(x => x.ConfirmaSenha)
             .WithMessage("Senha e confirmação de senha devem ser iguais.")
             .MinimumLength(6)
             .WithMessage("Senha deve ter ao mínimo 6 caracteres")
             .Matches(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d\s]).{6,}$")
             .WithMessage("Senha deve conter pelo menos uma letra maiúscula, uma letra minúscula, um dígito e um caractere especial.");
+        });
 
         RuleFor(x => x.Usuario)
             .MaximumLength(45)

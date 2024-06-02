@@ -20,13 +20,21 @@ public class UpdateAlunoHandler(IAlunoRepository alunoRepository, IValidator<Upd
         result.ThrowExceptionIfNotValid("Erro ao editar aluno");
 
         var existingAluno = await _alunoRepository.GetByIdAsync(request.Id);
+        
         if (existingAluno is null)
             throw new NotFoundException($"Aluno de id {request.Id} não foi encontrado.");
 
-        request.Senha = CriptographyService.HashPassword(request.Senha);
+        existingAluno.Nome = request.Nome;
+        existingAluno.Usuario = request.Usuario;
 
-        var alunoAlterado = await _alunoRepository.UpdateAsync(request);
+        if (request.Senha is not null)
+        {
+            request.Senha = CriptographyService.HashPassword(request.Senha);
+            existingAluno.Senha = request.Senha;
+        }
 
-        return new AlunoDto(alunoAlterado.Id, alunoAlterado.Nome, alunoAlterado.Usuario);
+        var updatedAluno = await _alunoRepository.UpdateAsync(existingAluno);
+
+        return new AlunoDto(updatedAluno.Id, updatedAluno.Nome, updatedAluno.Usuario);
     }
 }
